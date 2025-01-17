@@ -4,14 +4,15 @@
  */
 package com.mauroheinrich.logintodocode.igu;
 
+import com.mauroheinrich.logintodocode.logica.Controladora;
+
 
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
+   Controladora control; 
     public Principal() {
         initComponents();
+        control  = new Controladora();
     }
 
     /**
@@ -165,6 +166,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String usuario = txtUsuario.getText();
+        String contrasenia = txtContrasenia.getText();
+        String mensaje = control.validarUsuario(usuario, contrasenia);
+        
+        txtMensaje.setText(mensaje);
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
