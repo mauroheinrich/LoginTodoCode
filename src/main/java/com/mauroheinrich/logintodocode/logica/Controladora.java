@@ -8,6 +8,7 @@ import java.util.List;
 public class Controladora {
     
     ControladoraPersistencia controlPersis;// = new ControladoraPersistencia();
+    
 
     public Controladora() {
         controlPersis = new ControladoraPersistencia();
