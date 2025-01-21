@@ -5,12 +5,13 @@
 package com.mauroheinrich.logintodocode.igu;
 
 import com.mauroheinrich.logintodocode.logica.Controladora;
+import com.mauroheinrich.logintodocode.logica.Usuario;
 
 
-public class Principal extends javax.swing.JFrame {
+public class LoginInicial extends javax.swing.JFrame {
 
    Controladora control; 
-    public Principal() {
+    public LoginInicial() {
         initComponents();
         control  = new Controladora();
     }
@@ -168,9 +169,30 @@ public class Principal extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String usuario = txtUsuario.getText();
         String contrasenia = txtContrasenia.getText();
-        String mensaje = control.validarUsuario(usuario, contrasenia);
+        Usuario usr = control.validarUsuario(usuario, contrasenia);
         
-        txtMensaje.setText(mensaje);
+        if(usr!=null){
+            String rol = usr.getUnRol().getNombreRol();
+            if(rol.equals("admin")){
+            PrincipalAdmin pAdmin = new PrincipalAdmin(control);
+            pAdmin.setVisible(true);
+            pAdmin.setLocationRelativeTo(null);
+            this.dispose();
+        }
+        if(rol.equals("user")){
+            PrincipalUser pUser = new PrincipalUser(control);
+            pUser.setVisible(true);
+            pUser.setLocationRelativeTo(null);
+            this.dispose(); 
+        }    
+            
+        }else{
+        txtMensaje.setText("Usuario o contraseña incorrectos");
+        }
+        
+        
+        
+       
         
     }//GEN-LAST:event_btnLoginActionPerformed
 

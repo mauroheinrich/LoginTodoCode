@@ -14,27 +14,33 @@ public class Controladora {
         controlPersis = new ControladoraPersistencia();
     }
     
-    public String validarUsuario(String usuario, String contrasenia) {
+    public Usuario validarUsuario(String usuario, String contrasenia) {
         
-        String  mensaje ="";
+        //String  mensaje ="";
+        Usuario usr = null; 
         List <Usuario> listaUsuarios = controlPersis.traerUsuarios();
         
         for(Usuario usu: listaUsuarios){
             if(usu.getNombreUsuario().equals(usuario)){
                 if(usu.getContrasenia().equals(contrasenia)){
-                    mensaje = "Usuario y contraseña correcto. Bienvenido/a!!";
-                    return mensaje;
+                  //  mensaje = "Usuario y contraseña correcto. Bienvenido/a!!";
+                  usr = usu;
+                  return usr;
                 }
                 else{
-                    mensaje = "Contraseña incorrecta. Intente nuevamente!";
-                    return mensaje;
+                   // mensaje = "Contraseña incorrecta. Intente nuevamente!";
+                  
                 }
             }
             else{
-                mensaje = "Usuario invalido";
+               // mensaje = "Usuario invalido";
+                    usr = null;
+                   return usr;
               
             }
         }
-        return mensaje;
+        return usr;
     }
+
+    
 }
