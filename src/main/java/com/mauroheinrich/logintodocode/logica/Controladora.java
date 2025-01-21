@@ -35,7 +35,7 @@ public class Controladora {
             else{
                // mensaje = "Usuario invalido";
                     usr = null;
-                   return usr;
+                   
               
             }
         }

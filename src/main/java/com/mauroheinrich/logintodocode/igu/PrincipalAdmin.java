@@ -5,15 +5,18 @@
 package com.mauroheinrich.logintodocode.igu;
 
 import com.mauroheinrich.logintodocode.logica.Controladora;
+import com.mauroheinrich.logintodocode.logica.Usuario;
 
 
 public class PrincipalAdmin extends javax.swing.JFrame {
 Controladora control;
+Usuario usr;
    
-    public PrincipalAdmin(Controladora control) {
+    public PrincipalAdmin(Controladora control, Usuario usr) {
         
         initComponents();
         this.control = control;
+        this.usr = usr;
     }
 
    
@@ -33,6 +36,11 @@ Controladora control;
         txtNombreUser = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         jLabel1.setText("SISTEMA ADMINITRADOR DE USUARIO");
@@ -59,6 +67,11 @@ Controladora control;
         btnRecargar.setText("RECARGAR TABLA");
 
         btnSalir.setText("SALIR");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         txtNombreUser.setEditable(false);
         txtNombreUser.setText("jTextField1");
@@ -130,6 +143,14 @@ Controladora control;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+      this.txtNombreUser.setText(usr.getNombreUsuario());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
    
 

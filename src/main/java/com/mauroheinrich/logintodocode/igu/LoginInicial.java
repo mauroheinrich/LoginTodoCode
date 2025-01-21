@@ -174,13 +174,13 @@ public class LoginInicial extends javax.swing.JFrame {
         if(usr!=null){
             String rol = usr.getUnRol().getNombreRol();
             if(rol.equals("admin")){
-            PrincipalAdmin pAdmin = new PrincipalAdmin(control);
+            PrincipalAdmin pAdmin = new PrincipalAdmin(control, usr);
             pAdmin.setVisible(true);
             pAdmin.setLocationRelativeTo(null);
             this.dispose();
         }
         if(rol.equals("user")){
-            PrincipalUser pUser = new PrincipalUser(control);
+            PrincipalUser pUser = new PrincipalUser(control, usr);
             pUser.setVisible(true);
             pUser.setLocationRelativeTo(null);
             this.dispose(); 
