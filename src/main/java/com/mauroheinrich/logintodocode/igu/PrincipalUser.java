@@ -3,6 +3,8 @@ package com.mauroheinrich.logintodocode.igu;
 
 import com.mauroheinrich.logintodocode.logica.Controladora;
 import com.mauroheinrich.logintodocode.logica.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrincipalUser extends javax.swing.JFrame {
@@ -24,7 +26,7 @@ Usuario usr;
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaUsuarios = new javax.swing.JTable();
         btnRecargar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         txtNombreUser = new javax.swing.JTextField();
@@ -39,7 +41,7 @@ Usuario usr;
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         jLabel1.setText("SISTEMA ADMINITRADOR DE USUARIO");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -50,9 +52,14 @@ Usuario usr;
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaUsuarios);
 
         btnRecargar.setText("RECARGAR TABLA");
+        btnRecargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -117,14 +124,53 @@ Usuario usr;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //evento que carga al abrir la ventana
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-         this.txtNombreUser.setText(usr.getNombreUsuario());
+         this.txtNombreUser.setText(usr.getNombreUsuario()); // al abrir la ventana carga el nombre del usuario 
+         cargarTabla();//al abrir ventana se carga automaticamente la tabla
+         
     }//GEN-LAST:event_formWindowOpened
-
+    //carga automaticamente la lista completa de usuarios
+    private void cargarTabla() {
+        //definir el modelo que queremos que tenga la tabla
+        DefaultTableModel modeloTabla = new DefaultTableModel(){
+            //que fila y columna no sean editables
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+            
+        };
+        // establecemos los nombres de las columnas
+        String titulos [ ] ={"Id", "Usuario","Rol"};
+        modeloTabla.setColumnIdentifiers(titulos);
+        
+        //traer de la bd la lista de usuarios
+        List<Usuario> listaUsuarios = control.traerUsuarios();
+        
+        //preguntamos si la lista esta vacia
+        if(listaUsuarios!=null){
+            //recorrer la lista
+            for(Usuario usu : listaUsuarios){
+                Object[ ] objeto ={usu.getId(), usu.getNombreUsuario(), usu.getUnRol().getNombreRol()};
+                //agregamos una fila
+                modeloTabla.addRow(objeto);
+            }
+        }
+        
+        
+        
+        tablaUsuarios.setModel(modeloTabla);
+    }
+    
+    
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
+      cargarTabla();
+    }//GEN-LAST:event_btnRecargarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,7 +183,11 @@ Usuario usr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTextField txtNombreUser;
     // End of variables declaration//GEN-END:variables
+
+   
+
+    
 }
