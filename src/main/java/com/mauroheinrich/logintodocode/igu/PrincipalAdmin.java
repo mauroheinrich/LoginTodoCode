@@ -6,6 +6,8 @@ package com.mauroheinrich.logintodocode.igu;
 
 import com.mauroheinrich.logintodocode.logica.Controladora;
 import com.mauroheinrich.logintodocode.logica.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrincipalAdmin extends javax.swing.JFrame {
@@ -27,7 +29,7 @@ Usuario usr;
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaUsuarios = new javax.swing.JTable();
         btnNuevoUsuario = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
@@ -45,7 +47,7 @@ Usuario usr;
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         jLabel1.setText("SISTEMA ADMINITRADOR DE USUARIO");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -56,7 +58,7 @@ Usuario usr;
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaUsuarios);
 
         btnNuevoUsuario.setText("CREAR USUARIO");
 
@@ -145,7 +147,41 @@ Usuario usr;
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-      this.txtNombreUser.setText(usr.getNombreUsuario());
+       this.txtNombreUser.setText(usr.getNombreUsuario()); // al abrir la ventana carga el nombre del usuario 
+         cargarTabla();//al abrir ventana se carga automaticamente la tabla
+         
+    }                                 
+    //carga automaticamente la lista completa de usuarios
+    private void cargarTabla() {
+        //definir el modelo que queremos que tenga la tabla
+        DefaultTableModel modeloTabla = new DefaultTableModel(){
+            //que fila y columna no sean editables
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+            
+        };
+        // establecemos los nombres de las columnas
+        String titulos [ ] ={"Id", "Usuario","Rol"};
+        modeloTabla.setColumnIdentifiers(titulos);
+        
+        //traer de la bd la lista de usuarios
+        List<Usuario> listaUsuarios = control.traerUsuarios();
+        
+        //preguntamos si la lista esta vacia
+        if(listaUsuarios!=null){
+            //recorrer la lista
+            for(Usuario usu : listaUsuarios){
+                Object[ ] objeto ={usu.getId(), usu.getNombreUsuario(), usu.getUnRol().getNombreRol()};
+                //agregamos una fila
+                modeloTabla.addRow(objeto);
+            }
+        }
+        
+        
+        
+        tablaUsuarios.setModel(modeloTabla);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -163,7 +199,7 @@ Usuario usr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTextField txtNombreUser;
     // End of variables declaration//GEN-END:variables
 }
