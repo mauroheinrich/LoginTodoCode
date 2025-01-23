@@ -7,6 +7,8 @@ package com.mauroheinrich.logintodocode.igu;
 import com.mauroheinrich.logintodocode.logica.Controladora;
 import com.mauroheinrich.logintodocode.logica.Usuario;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -67,9 +69,19 @@ Usuario usr;
             }
         });
 
-        btnEditar.setText("EDITARUSUARIO");
+        btnEditar.setText("EDITAR USUARIO");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnBorrar.setText("BORRAR USUARIO");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         btnRecargar.setText("RECARGAR TABLA");
 
@@ -197,9 +209,81 @@ Usuario usr;
       AltaUsuario altaUsu = new AltaUsuario(control);
       altaUsu.setVisible(true);
       altaUsu.setLocationRelativeTo(null);
-      this.dispose();
+      //this.dispose();
     }//GEN-LAST:event_btnNuevoUsuarioActionPerformed
 
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        /*tengo que validar 3 cosas:
+           1. que la tabla tenga elementos 
+           2. que se haya seleccionado 1 elemento        
+           3. que exista ese ID*/        
+        
+        // validacion 1
+        if (tablaUsuarios.getRowCount()>0){
+            //validacion 2
+            if(tablaUsuarios.getSelectedRow()!=-1){
+                //validacion 3: obtener Id del elemento a elminar
+                int id_usuario = Integer.parseInt(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(),0)));
+                
+                //llamar al metodo borrar
+                control.borrarUsuario(id_usuario);
+                
+                //avisar al usuario que se borró correctamente
+                mostrarMensaje("Se borró el usuario correctamente","Info", "Eliminación correcta");
+                
+                
+                
+                cargarTabla();
+                
+                
+            }
+            else{
+                mostrarMensaje("No se seleccionó ningún registro","Error", "Error al borrar");
+                }
+        }
+        else{
+             mostrarMensaje("La tabla está vacía","Error", "Error al borrar");
+            }
+        
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+            if (tablaUsuarios.getRowCount()>0){
+            //validacion 2
+            if(tablaUsuarios.getSelectedRow()!=-1){
+                //validacion 3: obtener Id del elemento a elminar
+                int id_usuario = Integer.parseInt(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(),0)));
+                
+                //llamar a la ventana de edición
+                EdicionUsuarios pantallaEdic = new EdicionUsuarios(control,id_usuario);
+                pantallaEdic.setVisible(true);
+                pantallaEdic.setLocationRelativeTo(null);
+                
+                
+            }
+            else{
+                mostrarMensaje("No se seleccionó ningún registro","Error", "Error al editar");
+                }
+        }
+        else{
+             mostrarMensaje("La tabla está vacía","Error", "Error al editar");
+            }    
+    }//GEN-LAST:event_btnEditarActionPerformed
+    
+    
+    
+    
+    public void mostrarMensaje(String mensaje, String tipo, String titulo) {
+    JOptionPane optionPane = new JOptionPane(mensaje);
+    if (tipo.equals("Info")) {
+        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+    } else if (tipo.equals("Error")) {
+        optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+    }
+    JDialog dialog = optionPane.createDialog(titulo);
+    dialog.setAlwaysOnTop(true);
+    dialog.setVisible(true);
+}
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

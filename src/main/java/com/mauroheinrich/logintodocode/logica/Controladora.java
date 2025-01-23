@@ -62,6 +62,11 @@ public class Controladora {
         if(rolEncontrado!=null){
              usu.setUnRol(rolEncontrado);
         }
+        
+        int id = this.buscarUltimaIdUsuarios();
+         usu.setId(id+1);
+        
+        
         controlPersis.crearUsuario(usu);
     }
 
@@ -76,5 +81,21 @@ public class Controladora {
        
        }
        return null;
+    }
+
+    private int buscarUltimaIdUsuarios() {
+      List<Usuario> listaUsuarios = this.traerUsuarios();
+      
+      Usuario usu = listaUsuarios.get(listaUsuarios.size()-1);
+      return usu.getId();
+      
+    }
+
+    public void borrarUsuario(int id_usuario) {
+        controlPersis.borrarUsuario(id_usuario);
+    }
+
+    public Usuario traerUsuario(int id_usuario) {
+        return controlPersis.traerUsuario(id_usuario);
     }
 }
