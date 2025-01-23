@@ -61,6 +61,11 @@ Usuario usr;
         jScrollPane1.setViewportView(tablaUsuarios);
 
         btnNuevoUsuario.setText("CREAR USUARIO");
+        btnNuevoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoUsuarioActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("EDITARUSUARIO");
 
@@ -187,6 +192,13 @@ Usuario usr;
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoUsuarioActionPerformed
+      AltaUsuario altaUsu = new AltaUsuario(control);
+      altaUsu.setVisible(true);
+      altaUsu.setLocationRelativeTo(null);
+      this.dispose();
+    }//GEN-LAST:event_btnNuevoUsuarioActionPerformed
 
    
 
