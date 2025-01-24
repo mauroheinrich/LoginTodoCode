@@ -1,6 +1,6 @@
 # Sistema de Roles y Permisos en Java
 Este proyecto implementa un sistema completo de administración de usuarios y roles utilizando Java, JPA y una base de datos. El sistema permite el manejo de usuarios con diferentes roles, incluyendo la creación, modificación, eliminación y visualización de usuarios.
-![Sistema de Roles y Permisos en Java](src/main/undefined_SISTEMA_de_ROLES_y_PERMISOS_en_JAVA.png)
+![Sistema de Roles y Permisos en Java](src/main/imagen.png)
 
 ## Funciones Principales
 -  Gestión de Login: Sistema para autenticar usuarios.
