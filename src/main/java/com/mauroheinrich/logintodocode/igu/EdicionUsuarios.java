@@ -2,12 +2,18 @@
 package com.mauroheinrich.logintodocode.igu;
 
 import com.mauroheinrich.logintodocode.logica.Controladora;
+import com.mauroheinrich.logintodocode.logica.Rol;
 import com.mauroheinrich.logintodocode.logica.Usuario;
+import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 public class EdicionUsuarios extends javax.swing.JFrame {
 int id_usuario;
 Controladora control;
-   
+Usuario usu;   
+
+
     public EdicionUsuarios(Controladora control,int id_usuario) {
         initComponents();
         this.id_usuario = id_usuario;
@@ -149,15 +155,58 @@ Controladora control;
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        String usuario = txtUsuario.getText();
+        String contra = txtContra.getText();
+        String rol = (String)cmbRol.getSelectedItem();
         
+        control.editarUsuario(usu,usuario,contra,rol);
+        
+        mostrarMensaje("Usuario editado exitosamente", "Info", "Edicion exitosa");
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    
+    
+     public void mostrarMensaje(String mensaje, String tipo, String titulo) {
+        JOptionPane optionPane = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        } else if (tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
+   
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        
         //buscar el usuario
-        Usuario usu = control.traerUsuario(id_usuario);
+        usu = control.traerUsuario(id_usuario);
+        
+        //cargar datos en la interface
         txtUsuario.setText(usu.getNombreUsuario());
         txtContra.setText(usu.getContrasenia());
+        
+        //cargar roles de forma generica
+        List<Rol> listaRoles = control.traerRoles();
+        
+        if (listaRoles != null) {
+             for (Rol rol: listaRoles){
+             cmbRol.addItem(rol.getNombreRol());
+         }
+        }    
+        
+        //marcar/seleccionar el rol que tiene este usuario
+        String rol = usu.getUnRol().getNombreRol();
+        
+        int cantidadItems = cmbRol.getItemCount();
+        for(int i=0; i<cantidadItems; i++){
+            if(String.valueOf(cmbRol.getItemAt(i)).equals(rol)){
+                cmbRol.setSelectedIndex(i);
+            }
+                
+        }
         
         
         

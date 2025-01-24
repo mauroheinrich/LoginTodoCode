@@ -84,6 +84,11 @@ Usuario usr;
         });
 
         btnRecargar.setText("RECARGAR TABLA");
+        btnRecargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -269,6 +274,10 @@ Usuario usr;
              mostrarMensaje("La tabla está vacía","Error", "Error al editar");
             }    
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
+       cargarTabla();
+    }//GEN-LAST:event_btnRecargarActionPerformed
     
     
     
