@@ -26,7 +26,7 @@ Este proyecto está destinado para desarrolladores que deseen implementar un sis
 ## Contribuciones
 Las contribuciones son bienvenidas. Si deseas colaborar, por favor abre un issue o envía un pull request.
 ## Contacto
-Para consultas o información adicional, puedes contactar a los desarrolladores:
+
 Mauro Jesús Heinrich
 <h3 align="left">Conéctate conmigo:</h3>
 <p align="left">
